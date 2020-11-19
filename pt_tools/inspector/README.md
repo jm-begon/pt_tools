@@ -1,0 +1,1 @@
+This is basically a copy of available at [`pt_inspector`](https://github.com/jm-begon/pt_inspector)
