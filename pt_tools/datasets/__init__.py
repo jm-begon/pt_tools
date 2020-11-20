@@ -1,5 +1,5 @@
 from .datasets import CIFAR10, CIFAR100, SVHN, MNIST, FashionMNIST, STL10, \
-    TinyImageNet, LSUNTestSet, ImageNet
+    TinyImageNet, LSUNTestSet, ImageNet, STL10WithUnlabeled
 from .artificial_datasets import Uniform, Gaussian, GLikeCif, Constant
 
 
@@ -23,6 +23,7 @@ __DATASETS__ = {
     "glikecif": GLikeCif,
     "imagenet": ImageNet,
     "constant": Constant,
+    "ustl10": STL10WithUnlabeled,
 }
 
 __AUGMENTED_DATASETS__ = {
@@ -34,7 +35,7 @@ __AUGMENTED_DATASETS__ = {
     "TinyImageNet": CropHzFlipAugmented().partial(TinyImageNet),
     "uniform": Uniform,
     "gaussian": Gaussian,
-
+    "ustl10": CropHzFlipAugmented().partial(STL10WithUnlabeled),
 }
 
 

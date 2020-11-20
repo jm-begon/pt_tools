@@ -234,6 +234,34 @@ class STL10(FullDataset):
         return np.concatenate(all)
 
 
+class STL10WithUnlabeled(STL10):
+    @classmethod
+    def get_default_lengths(cls):
+        return 90000, 10000, 8000
+
+    @classmethod
+    def get_default_n_outputs(cls):
+        return 11
+
+
+    def get_ls_vs_ts(self):
+        train_set = torchvision.datasets.STL10(
+            root=self.folder, split='train+unlabeled',
+            download=True,
+            transform=self.ls_transform,
+            target_transform=(lambda t: 10 if t is None else t),
+        )
+
+        test_set = torchvision.datasets.STL10(
+            root=self.folder, split='test',
+            download=True,
+            transform=self.ts_transform
+        )
+
+        train_set, valid_set = self.vs_from_ls(train_set)
+
+        return train_set, valid_set, test_set
+
 
 
 
