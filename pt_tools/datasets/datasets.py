@@ -262,6 +262,10 @@ class STL10WithUnlabeled(STL10):
 
         return train_set, valid_set, test_set
 
+    @property
+    def folder(self):
+        return super().folder  # look for 'stl10'
+
 
 
 
