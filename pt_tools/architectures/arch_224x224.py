@@ -43,17 +43,10 @@ def make_wideresnet50_2(n_outputs=10, pretrained=False):
 
 class MobileNet2048(MobileNetV2):
     def __setattr__(self, name, value):
-        if name == "fc":
-            self.classifier[1] = value
-            return
         if name == "last_channel":
             value = 2048
         super().__setattr__(name, value)
 
-    def __getattr__(self, item):
-        if item == "fc":
-            return self.classifier[1]
-        return super().__getattr__(item)
 
 
 def make_mobilenet2048(n_outputs=10, pretrained=False):
