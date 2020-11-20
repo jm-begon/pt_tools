@@ -266,6 +266,10 @@ class STL10WithUnlabeled(STL10):
     def folder(self):
         return super().folder  # look for 'stl10'
 
+    @property
+    def folder(self):
+        return self.folder_lookup_fn("stl10")
+
 
 
 
