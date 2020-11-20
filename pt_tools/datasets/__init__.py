@@ -29,6 +29,12 @@ __AUGMENTED_DATASETS__ = {
     "cifar10": CropHzFlipAugmented().partial(CIFAR10),
     "cifar100": CropHzFlipAugmented().partial(CIFAR100),
     "mnist": CropAugmented().partial(MNIST),
+    "svhn": CropAugmented().partial(SVHN),
+    "stl10": CropHzFlipAugmented().partial(STL10),
+    "TinyImageNet": CropHzFlipAugmented().partial(TinyImageNet),
+    "uniform": Uniform,
+    "gaussian": Gaussian,
+
 }
 
 
