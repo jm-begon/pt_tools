@@ -85,7 +85,7 @@ class CropAugmented(DataAugmentation):
         ls = self.transform_ls()
         if len(ls) == 1:
             return ls[0]
-        return transforms.Compose(transforms.RandomCrop(**self.kwargs))
+        return transforms.Compose(ls)
 
 
 class CropHzFlipAugmented(CropAugmented):
