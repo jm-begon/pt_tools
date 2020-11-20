@@ -62,6 +62,11 @@ class FullDataset(object, metaclass=ABCMeta):
 
     def __init__(self, shape=None, normalization=None,
                  ls_data_augmentation=None, folder_lookup_fn=None):
+        if folder_lookup_fn is None:
+            folder_lookup_fn = get_data_folder
+        self.folder_lookup_fn = folder_lookup_fn
+
+
         def_shape = self.__class__.get_default_shape()
         if shape is None:
             shape = def_shape
@@ -92,13 +97,11 @@ class FullDataset(object, metaclass=ABCMeta):
             transform_list = [ls_data_augmentation] + transform_list
 
         self.ls_transform = transforms.Compose(transform_list)
+
         # For REPR
         self.shape = shape
         self.normalization = normalization
         self.ls_data_augmentation = ls_data_augmentation
-        if folder_lookup_fn is None:
-            folder_lookup_fn = get_data_folder
-        self.folder_lookup_fn = folder_lookup_fn
 
     def __repr__(self):
         return "{}(shape={}, normalizaton={}, ls_data_augmentation={})" \

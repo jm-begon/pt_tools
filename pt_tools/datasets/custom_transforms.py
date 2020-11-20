@@ -66,37 +66,42 @@ class DataAugmentation(object):
 
 
 class CropAugmented(DataAugmentation):
-    def __init__(self, size=32, padding=4, padding_mode="reflect"):
-        self.kwargs = {"size": size, "padding":padding,
+    def __init__(self, size=None, crop_size=32, padding=4,
+                 padding_mode="reflect"):
+
+        self.size = size
+        self.kwargs = {"size": crop_size, "padding":padding,
                        "padding_mode":padding_mode}
 
-    def get_transform(self):
-        return transforms.RandomCrop(**self.kwargs)
+    def transform_ls(self):
+        ls = []
+        if self.size is not None:
+            ls.append(transforms.Resize(self.size))
 
-
-class CropHzFlipAugmented(DataAugmentation):
-    def __init__(self, size=32, padding=4, padding_mode="reflect"):
-        self.kwargs = {"size": size, "padding": padding,
-                       "padding_mode": padding_mode}
-
-    def get_transform(self):
-        return transforms.Compose([
-            transforms.RandomCrop(**self.kwargs),
-            transforms.RandomHorizontalFlip(),
-        ])
-
-
-class CropHzVFlipAugmented(DataAugmentation):
-    def __init__(self, size=32, padding=4, padding_mode="reflect"):
-        self.kwargs = {"size": size, "padding": padding,
-                       "padding_mode": padding_mode}
+        ls.append(transforms.RandomCrop(**self.kwargs))
+        return ls
 
     def get_transform(self):
-        return transforms.Compose([
-            transforms.RandomCrop(**self.kwargs),
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomVerticalFlip(),
-        ])
+        ls = self.transform_ls()
+        if len(ls) == 1:
+            return ls[0]
+        return transforms.Compose(transforms.RandomCrop(**self.kwargs))
+
+
+class CropHzFlipAugmented(CropAugmented):
+
+    def transform_ls(self):
+        ls = super().transform_ls()
+        ls.append(transforms.RandomHorizontalFlip())
+        return ls
+
+
+class CropHzVFlipAugmented(CropHzFlipAugmented):
+    def transform_ls(self):
+        ls = super().transform_ls()
+        ls.append(transforms.RandomVerticalFlip())
+        return ls
+
 
 
 class FlipsAugmented(DataAugmentation):
