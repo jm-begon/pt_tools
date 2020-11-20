@@ -5,7 +5,7 @@ from .artificial_datasets import Uniform, Gaussian, GLikeCif, Constant
 
 from .custom_transforms import CropAugmented, CropHzFlipAugmented, \
     FlipsAugmented, CropHzVFlipAugmented
-from .utils import get_transform
+from .utils import get_transform, get_base_dataset
 
 
 
@@ -41,4 +41,5 @@ __AUGMENTED_DATASETS__ = {
 
 __all__ = [
     "__DATASETS__", "__AUGMENTED_DATASETS__", "get_transform",
+    "get_base_dataset"
 ]
