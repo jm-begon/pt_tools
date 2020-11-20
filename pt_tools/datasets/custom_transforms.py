@@ -58,7 +58,7 @@ class InverseFactory(object):
 # ================================ DATA AUG. ================================= #
 class DataAugmentation(object):
     def get_transform(self):
-        return transforms.Compose()
+        return transforms.Compose([])
 
     def partial(self, full_dataset_factory, **kwargs):
         return partial(full_dataset_factory,

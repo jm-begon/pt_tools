@@ -54,7 +54,7 @@ class FullDataset(object, metaclass=ABCMeta):
         shape = full_dataset.shape if overriding_shape is None else overriding_shape
         normalization = full_dataset.normalization if overrinding_normalization is None else overrinding_normalization
         folder_lookup_fn = full_dataset.foler_lookup_fn if overrinding_folder_lookup_fn else overrinding_folder_lookup_fn
-        return cls(shape, normalization)
+        return cls(shape, normalization, folder_lookup_fn=folder_lookup_fn)
 
     @classmethod
     def base_transform(cls):

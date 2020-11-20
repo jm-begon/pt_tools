@@ -265,9 +265,7 @@ class TinyImageNet(FullDataset):
 
     @property
     def folder(self):
-        if self._folder is not None:
-            return self._folder
-        return get_data_folder("tinyimagenet/tiny-imagenet-200")
+        return self.folder_lookup_fn("tinyimagenet/tiny-imagenet-200")
 
     def get_transform(self):
         return transforms.Compose([
