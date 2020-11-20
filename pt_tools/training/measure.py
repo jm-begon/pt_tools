@@ -1,12 +1,10 @@
 from abc import ABCMeta
-
 import numpy as np
 import torch
-from pt_helper.architectures import Memoizer
-from pt_helper.architectures.memoizer import PseudoMemoizer
 from torch.nn import functional as F
 
 from pt_tools.training.util import Deviceable
+from ..architectures.memoizer import PseudoMemoizer, Memoizer
 
 
 class Measure(object):
@@ -334,7 +332,13 @@ class Comparator(Tester):
         losses_values = self.reductor_factory(len(self._losses), self.device)
 
         with torch.no_grad():
-            for data, true_target, index in loader:
+            for batch in loader:
+                data, true_target = batch[0:2]
+                index = None
+                if len(batch) == 3:
+                    # Got index for memoization
+                    index = batch[-1]
+
                 data = data.to(self.device)
                 true_target = true_target.to(self.device)
                 target = reference_model(data, index)
