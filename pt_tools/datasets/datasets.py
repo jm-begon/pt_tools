@@ -82,7 +82,7 @@ class SVHN(FullDataset):
     @classmethod
     def get_default_normalization(cls):
         return transforms.Normalize((0.5, 0.5, 0.5),
-                                    (0.5, 0.5, 0.5)),
+                                    (0.5, 0.5, 0.5))
 
     @classmethod
     def get_default_shape(cls):
@@ -237,7 +237,7 @@ class STL10(FullDataset):
 class STL10WithUnlabeled(STL10):
     @classmethod
     def get_default_lengths(cls):
-        return 90000, 10000, 8000
+        return 94500, 10500, 8000
 
     @classmethod
     def get_default_n_outputs(cls):

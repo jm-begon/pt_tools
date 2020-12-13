@@ -144,6 +144,11 @@ class WithLRScheduler(TrainerDecorator):
         super().__init__(trainer, callable=lambda e,l : scheduler.step())
 
 
+class WithScheduler(TrainerDecorator):
+    def __init__(self, trainer, scheduler):
+        super().__init__(trainer, callable=lambda e,l : scheduler.step())
+
+
 def make_trainer(model, optimizer, use_cuda=False,
                  save_path=None, loss_fn=F.cross_entropy,
                  save_best=False, scheduler=None):
