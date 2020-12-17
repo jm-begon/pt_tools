@@ -314,7 +314,7 @@ class Comparator(Tester):
 
     @property
     def memoize(self):
-        return isinstance(self.teacher, Memoizer)
+        return isinstance(self.reference_model, Memoizer)
 
     def _do_test(self, model, reference_model, loader):
         model.eval()
