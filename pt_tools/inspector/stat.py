@@ -59,6 +59,9 @@ class Stat(object):
         r_mean, r_std = self.get_running()
         return "Avg: {:.2E} +/- {:.2E} ".format(r_mean, r_std)
 
+    def __float__(self):
+        return float(self.get_running()[0])
+
 
 class Distrib(Stat):
     def __init__(self, size=0, min=np.inf, running_mean=0, running_square_mean=0,
@@ -110,6 +113,7 @@ class StreamingStat(Stat):
         self.first_var = first_var
         self.last_mean = last_mean
         self.last_var = last_var
+        self.has_first = False
 
     def add(self, np_tensor):
         mean, var = super().add(np_tensor)
@@ -117,10 +121,11 @@ class StreamingStat(Stat):
         self.last_mean = mean
         self.last_var = var
 
-        if self.size == 0:
+        if not self.has_first:
             # First capture
-            self.first_mean = self.last_mean
-            self.first_var = self.last_var
+            self.first_mean = mean
+            self.first_var = var
+            self.has_first = True
 
     def get_first(self):
         return self.first_mean, np.sqrt(self.first_var)

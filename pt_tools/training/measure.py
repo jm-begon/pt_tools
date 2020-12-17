@@ -307,26 +307,17 @@ class Comparator(Tester):
         super().__init__(model, use_cuda, losses,
                          reductor_factory=reductor_factory)
 
-        self.reference_model = PseudoMemoizer(reference_model) if memoize else \
-            reference_model
+        self.reference_model = Memoizer(reference_model) if memoize else \
+            PseudoMemoizer(reference_model)
         self.reference_model.to(self.device)
         self.memoized_models = {}
 
     @property
     def memoize(self):
-        return not isinstance(self.reference_model, PseudoMemoizer)
+        return isinstance(self.teacher, Memoizer)
 
-    def test(self, loader):
-        # Trick to get the good memoizer for the given loader
-
-        reference_model = self.memoized_models.get(id(loader)) \
-            if self.memoize else self.reference_model
-        if reference_model is None:
-            reference_model = Memoizer(self.reference_model)
-            self.memoized_models[id(loader)] = reference_model
-            reference_model.to(self.device)
-
-        self.model.eval()
+    def _do_test(self, model, reference_model, loader):
+        model.eval()
         reference_model.eval()
 
         losses_values = self.reductor_factory(len(self._losses), self.device)
@@ -342,7 +333,7 @@ class Comparator(Tester):
                 data = data.to(self.device)
                 true_target = true_target.to(self.device)
                 target = reference_model(data, index)
-                output = self.model(data)
+                output = model(data)
                 for i, loss_f in enumerate(self._losses):
                     losses_values.add(i,
                                       loss_f(output,
@@ -355,8 +346,21 @@ class Comparator(Tester):
                     data.to("cpu")
                     true_target.to("cpu")
 
-
         return tuple(iter(losses_values))
+
+
+    def test(self, loader):
+        # Trick to get the good memoizer for the given loader
+
+        reference_model = self.memoized_models.get(id(loader)) \
+            if self.memoize else self.reference_model
+        if reference_model is None:
+            reference_model = Memoizer(self.reference_model)
+            self.memoized_models[id(loader)] = reference_model
+            reference_model.to(self.device)
+
+        return self._do_test(self.model, reference_model, loader)
+
 
 
 
