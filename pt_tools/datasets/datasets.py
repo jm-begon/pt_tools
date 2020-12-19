@@ -303,6 +303,10 @@ class TinyImageNet(FullDataset):
     def folder(self):
         return self.folder_lookup_fn("tinyimagenet/tiny-imagenet-200")
 
+    @property
+    def _shuffle(self):
+        return True
+
     def get_transform(self):
         return transforms.Compose([
             transforms.Resize(32),
@@ -437,6 +441,10 @@ class ImageNet(FullDataset):
     @classmethod
     def base_transform(cls):
         return [transforms.Resize(256), transforms.CenterCrop(224)]
+
+    @property
+    def _shuffle(self):
+        return True
 
     def get_ls_vs_ts(self):
         ls = torchvision.datasets.ImageNet(

@@ -6,6 +6,7 @@ import torch
 from torch.utils.data import ConcatDataset
 from torch.utils.data import Subset
 from torchvision import transforms
+from sklearn.utils import check_random_state
 
 
 def get_data_folder(db_folder):
@@ -127,12 +128,20 @@ class FullDataset(object, metaclass=ABCMeta):
         """
         return tuple()
 
+    @property
+    def _shuffle(self):
+        return False
+
     def vs_from_ls(self, train_set, ls_prop=0.9):
         # Validation set from Test set
         valid_set = copy(train_set)
         valid_set.transform = self.vs_transform
 
         indices = np.arange(len(train_set))
+        if self._shuffle:
+            rng = check_random_state(17377)
+            rng.shuffle(indices)
+
         split = int(len(train_set) * ls_prop)
 
         train_set = Subset(train_set, indices[:split])
