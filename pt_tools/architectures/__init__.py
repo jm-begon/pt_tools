@@ -5,7 +5,8 @@ from functools import partial
 from .arch_32x32 import ResNet50, DenseNet121, ResNet34, WideResNet40_2, \
     ShuffleNetG2
 from .arch_224x224 import make_resnet50, make_densenet121, \
-    make_wideresnet50_2, make_mobilenet2048, make_small_shufflenet, TwoConvNet
+    make_wideresnet50_2, make_mobilenet2048, make_small_shufflenet, \
+    TwoConvNet, make_mobilenet
 from .util import count_parameters, magnitude, save_model
 
 
@@ -32,6 +33,7 @@ __ARCHITECTURES_224__ = {
     "mobilenet2048": make_mobilenet2048,
     "smallshufflenet": make_small_shufflenet,
     "twoconvnet": TwoConvNet,
+    "mobilenet": make_mobilenet,
 }
 
 __all__ = ["__ARCHITECTURES__", "__ARCHITECTURES_224__",

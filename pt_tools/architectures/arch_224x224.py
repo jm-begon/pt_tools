@@ -2,7 +2,7 @@ import torch
 from torchvision.models import ShuffleNetV2
 from torchvision.models.resnet import resnet50, _resnet, Bottleneck
 from torchvision.models.densenet import densenet121
-from torchvision.models.mobilenet import MobileNetV2
+from torchvision.models.mobilenet import MobileNetV2, mobilenet_v2
 
 def make_resnet50(n_outputs=10, pretrained=False):
     model = resnet50(pretrained=pretrained, num_classes=n_outputs)
@@ -52,7 +52,14 @@ class MobileNet2048(MobileNetV2):
 def make_mobilenet2048(n_outputs=10, pretrained=False):
     if pretrained:
         raise NotImplementedError()
-    model = MobileNet2048(num_classes=n_outputs)
+    model = MobileNetV2(num_classes=n_outputs)
+    model.input_size = (3, 224, 224)
+    return model
+
+
+def make_mobilenet(n_outputs=10, pretrained=False):
+    model = mobilenet_v2(pretrained=pretrained,
+                         num_classes=n_outputs)
     model.input_size = (3, 224, 224)
     return model
 
