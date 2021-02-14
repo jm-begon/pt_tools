@@ -71,6 +71,26 @@ class DisablingTransform(object):
                                            repr(self.transform),
                                            repr(self.disable))
 
+    def disable(self):
+        self.disable = True
+
+    def enable(self):
+        self.disable = False
+
+
+class TurnOff(object):
+    def __init__(self, *disabling_transforms):
+        self.disablings = disabling_transforms
+
+    def __enter__(self):
+        for disabling in self.disablings:
+            disabling.disable()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        for disabling in self.disablings:
+            disabling.enable()
+
+
 
 class DataAugmentation(object):
     def get_transform(self):

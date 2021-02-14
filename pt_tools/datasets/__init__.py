@@ -4,7 +4,7 @@ from .artificial_datasets import Uniform, Gaussian, GLikeCif, Constant
 
 
 from .custom_transforms import CropAugmented, CropHzFlipAugmented, \
-    FlipsAugmented, CropHzVFlipAugmented
+    FlipsAugmented, CropHzVFlipAugmented, DisablingTransform, TurnOff
 from .utils import get_transform, get_base_dataset
 
 
