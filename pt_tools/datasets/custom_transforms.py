@@ -56,6 +56,22 @@ class InverseFactory(object):
 
 
 # ================================ DATA AUG. ================================= #
+class DisablingTransform(object):
+    def __init__(self, transform, disable=False):
+        self.transform = transform,
+        self.disable = disable
+
+    def __call__(self, img):
+        if self.disable:
+            return img
+        return self.transform(img)
+
+    def __repr__(self):
+        return "{}({}, disable={})".format(self.__class__.__name__,
+                                           repr(self.transform),
+                                           repr(self.disable))
+
+
 class DataAugmentation(object):
     def get_transform(self):
         return transforms.Compose([])
