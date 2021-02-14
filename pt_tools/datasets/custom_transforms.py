@@ -57,25 +57,25 @@ class InverseFactory(object):
 
 # ================================ DATA AUG. ================================= #
 class DisablingTransform(object):
-    def __init__(self, transform, disable=False):
+    def __init__(self, transform, disabled=False):
         self.transform = transform,
-        self.disable = disable
+        self.disabled = disabled
 
     def __call__(self, img):
-        if self.disable:
+        if self.disabled:
             return img
         return self.transform(img)
 
     def __repr__(self):
-        return "{}({}, disable={})".format(self.__class__.__name__,
-                                           repr(self.transform),
-                                           repr(self.disable))
+        return "{}({}, disabled={})".format(self.__class__.__name__,
+                                            repr(self.transform),
+                                            repr(self.disabled))
 
     def disable(self):
-        self.disable = True
+        self.disabled = True
 
     def enable(self):
-        self.disable = False
+        self.disabled = False
 
 
 class TurnOff(object):
