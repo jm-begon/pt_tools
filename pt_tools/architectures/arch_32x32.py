@@ -388,6 +388,6 @@ class ShuffleNet(nn.Module):
         return out
 
 
-def ShuffleNetG2(input_size=(3, 32, 32), n_outputs=10):
+def make_shufflenet(input_size=(3, 32, 32), n_outputs=10):
     return ShuffleNet(n_input_channel=input_size[0], out_planes=[200, 400, 800],
                       num_blocks=[4, 8, 4], groups=2, n_outputs=n_outputs)

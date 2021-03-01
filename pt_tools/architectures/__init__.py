@@ -3,7 +3,7 @@
 from functools import partial
 
 from .arch_32x32 import ResNet50, DenseNet121, ResNet34, WideResNet40_2, \
-    ShuffleNetG2
+    make_shufflenet
 from .arch_224x224 import make_resnet50, make_densenet121, \
     make_wideresnet50_2, make_mobilenet2048, make_small_shufflenet, \
     TwoConvNet, make_mobilenet
@@ -19,7 +19,7 @@ __ARCHITECTURES__ = {
     "resnet34": ResNet34,
     "densenet121": DenseNet121,
     "wideresnet": WideResNet40_2,
-    "shufflenet": ShuffleNetG2,
+
 }
 
 
@@ -34,6 +34,7 @@ __ARCHITECTURES_224__ = {
     "smallshufflenet": make_small_shufflenet,
     "twoconvnet": TwoConvNet,
     "mobilenet": make_mobilenet,
+    "shufflenet": make_shufflenet,
 }
 
 __all__ = ["__ARCHITECTURES__", "__ARCHITECTURES_224__",
