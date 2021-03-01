@@ -71,8 +71,8 @@ def make_small_shufflenet(n_outputs=10, pretrained=False):
     shufflenet.input_size = (3, 224, 224)
     return shufflenet
 
-def make_shufflenet(n_output=10, pretrained=False):
-    model = shufflenet_v2_x1_0(pretrained=pretrained, num_classes=n_output)
+def make_shufflenet(n_outputs=10, pretrained=False):
+    model = shufflenet_v2_x1_0(pretrained=pretrained, num_classes=n_outputs)
     model.input_size = (3, 224, 224)
     return model
 
