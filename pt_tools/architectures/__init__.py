@@ -2,11 +2,10 @@
 
 from functools import partial
 
-from .arch_32x32 import ResNet50, DenseNet121, ResNet34, WideResNet40_2, \
-    make_shufflenet
+from .arch_32x32 import ResNet50, DenseNet121, ResNet34, WideResNet40_2
 from .arch_224x224 import make_resnet50, make_densenet121, \
     make_wideresnet50_2, make_mobilenet2048, make_small_shufflenet, \
-    TwoConvNet, make_mobilenet
+    TwoConvNet, make_mobilenet, make_shufflenet
 from .util import count_parameters, magnitude, save_model
 
 

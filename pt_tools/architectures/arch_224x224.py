@@ -1,5 +1,5 @@
 import torch
-from torchvision.models import ShuffleNetV2
+from torchvision.models import ShuffleNetV2, shufflenet_v2_x1_0
 from torchvision.models.resnet import resnet50, _resnet, Bottleneck
 from torchvision.models.densenet import densenet121
 from torchvision.models.mobilenet import MobileNetV2, mobilenet_v2
@@ -70,6 +70,13 @@ def make_small_shufflenet(n_outputs=10, pretrained=False):
     shufflenet = ShuffleNetV2((2, 2, 2), (128, 256, 512, 1024, 2048), n_outputs)
     shufflenet.input_size = (3, 224, 224)
     return shufflenet
+
+def make_shufflenet(n_output=10, pretrained=False):
+    model = shufflenet_v2_x1_0(pretrained=pretrained, num_classes=n_output)
+    model.input_size = (3, 224, 224)
+    return model
+
+
 
 
 class TwoConvNet(torch.nn.Module):
