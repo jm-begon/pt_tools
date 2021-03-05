@@ -2,15 +2,10 @@ from collections import defaultdict
 
 import torch
 from pt_inspector.stat import Stat
-from samplefree_ood.datasets.datasets import GLikeCif
-from torchvision import transforms
 
-if __name__ == '__main__':
+def compute_normalization(full_dataset, what="ls"):
     collector = {}
 
-    what = "ls"
-
-    full_dataset = GLikeCif(normalization=transforms.Compose([]))
     ls, vs, ts = full_dataset.get_ls_vs_ts()
 
     if what == "ls":
@@ -21,7 +16,6 @@ if __name__ == '__main__':
         dataset = ts
     else:
         dataset = torch.utils.data.ConcatDataset([ls, vs, ts])
-
 
     # dataset[0] is a pair (image tensor, label)
     shape = dataset[0][0].size()
@@ -63,6 +57,11 @@ if __name__ == '__main__':
         means.append(m)
         stds.append(s)
 
-
     collector["means"] = tuple(means)
     collector["stds"] = tuple(stds)
+
+    return collector
+
+
+if __name__ == '__main__':
+    pass

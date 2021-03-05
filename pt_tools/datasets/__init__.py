@@ -1,5 +1,5 @@
 from .datasets import CIFAR10, CIFAR100, SVHN, MNIST, FashionMNIST, STL10, \
-    TinyImageNet, LSUNTestSet, ImageNet, STL10WithUnlabeled
+    TinyImageNet, LSUNTestSet, ImageNet, STL10WithUnlabeled, KMNIST
 from .artificial_datasets import Uniform, Gaussian, GLikeCif, Constant
 
 
@@ -24,6 +24,7 @@ __DATASETS__ = {
     "imagenet": ImageNet,
     "constant": Constant,
     "ustl10": STL10WithUnlabeled,
+    "kmnist": KMNIST,
 }
 
 __AUGMENTED_DATASETS__ = {

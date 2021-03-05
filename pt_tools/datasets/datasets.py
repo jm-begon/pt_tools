@@ -113,77 +113,77 @@ class SVHN(FullDataset):
 
         return train_set, valid_set, test_set
 
+class MNISTLike(FullDataset):
+    @classmethod
+    def get_default_lengths(cls):
+        return 54000, 6000, 10000
 
-class MNIST(FullDataset):
+    @classmethod
+    def get_default_shape(cls):
+        return 1, 28, 28
+
+    @classmethod
+    def get_default_n_outputs(cls):
+        return 10
+
+    @classmethod
+    def get_default_normalization(cls):
+        return AttributeError("Abstract")
+
+    @classmethod
+    def torch_class(cls):
+        return AttributeError("Abstract")
+
+    def get_ls_vs_ts(self):
+        train_set = self.__class__.torch_class()(
+            root=self.folder, train=True,
+            download=True,
+            transform=self.ls_transform
+        )
+
+        test_set = self.__class__.torch_class()(
+            root=self.folder, train=False,
+            download=True,
+            transform=self.ts_transform
+        )
+
+        train_set, valid_set = self.vs_from_ls(train_set)
+
+        return train_set, valid_set, test_set
+
+class MNIST(MNISTLike):
     @classmethod
     def get_default_normalization(cls):
         return transforms.Normalize((0.1307,), (0.3081,))
 
     @classmethod
-    def get_default_lengths(cls):
-        return 54000, 6000, 10000
-
-    @classmethod
-    def get_default_shape(cls):
-        return 1, 28, 28
-
-    @classmethod
-    def get_default_n_outputs(cls):
-        return 10
+    def torch_class(cls):
+        return torchvision.datasets.MNIST
 
 
-    def get_ls_vs_ts(self):
-        train_set = torchvision.datasets.MNIST(
-            root=self.folder, train=True,
-            download=True,
-            transform=self.ls_transform
-        )
-
-        test_set = torchvision.datasets.MNIST(
-            root=self.folder, train=False,
-            download=True,
-            transform=self.ts_transform
-        )
-
-        train_set, valid_set = self.vs_from_ls(train_set)
-
-        return train_set, valid_set, test_set
-
-
-class FashionMNIST(FullDataset):
+class FashionMNIST(MNISTLike):
     @classmethod
     def get_default_normalization(cls):
         return transforms.Normalize((0.2860,), (0.3530,))
 
     @classmethod
-    def get_default_lengths(cls):
-        return 54000, 6000, 10000
+    def torch_class(cls):
+        return torchvision.datasets.FashionMNIST
+
+
+
+class KMNIST(MNIST):
+    @classmethod
+    def get_default_normalization(cls):
+        return transforms.Normalize((0.19164627944577953,), (0.3482464146758613,))
 
     @classmethod
-    def get_default_shape(cls):
-        return 1, 28, 28
+    def get_default_normalization(cls):
+        return transforms.Compose([])
 
     @classmethod
-    def get_default_n_outputs(cls):
-        return 10
-
-    def get_ls_vs_ts(self):
-        train_set = torchvision.datasets.FashionMNIST(
-            root=self.folder, train=True,
-            download=True,
-            transform=self.ls_transform
-        )
-
-        test_set = torchvision.datasets.FashionMNIST(
-            root=self.folder, train=False,
-            download=True,
-            transform=self.ts_transform
-        )
-
-        train_set, valid_set = self.vs_from_ls(train_set)
-
-        return train_set, valid_set, test_set
-
+    def torch_class(cls):
+        return torchvision.datasets.KMNIST
 
 
 class STL10(FullDataset):
