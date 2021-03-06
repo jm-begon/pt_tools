@@ -37,6 +37,7 @@ __AUGMENTED_DATASETS__ = {
     "uniform": Uniform,
     "gaussian": Gaussian,
     "ustl10": CropHzFlipAugmented().partial(STL10WithUnlabeled),
+    "kmnist": CropAugmented().partial(KMNIST),
 }
 
 
