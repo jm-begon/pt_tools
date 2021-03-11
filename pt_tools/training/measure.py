@@ -58,7 +58,7 @@ def agreement_loss(prediction, hard_target=None, soft_target=None,
 
 
 def top5_acc_loss(input, hard_target=None, soft_target=None, reduction="batchmean"):
-    top5 = input.topk(5, 1)
+    top5 = input.topk(5, 1)[1]
     same = top5.eq(hard_target.view(-1, 1).expand_as(top5)).float().sum(dim=1)
     return same.sum() if reduction == "sum" else same.mean()
 
