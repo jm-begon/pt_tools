@@ -428,7 +428,7 @@ class ImageNet(FullDataset):
 
     @classmethod
     def get_default_n_outputs(cls):
-        return 2  # ~ [1000, 1300] / cls
+        return 1000  # ~ [1000, 1300] / cls
 
     @classmethod
     def get_default_lengths(cls):

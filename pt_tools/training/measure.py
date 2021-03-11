@@ -57,6 +57,12 @@ def agreement_loss(prediction, hard_target=None, soft_target=None,
     return loss.sum() if reduction == "sum" else loss.mean()
 
 
+def top5_acc_loss(input, hard_target=None, soft_target=None, reduction="batchmean"):
+    top5 = input.topk(5, 1)
+    same = top5.eq(hard_target.view(-1, 1).expand_as(top5)).float().sum(dim=1)
+    return same.sum() if reduction == "sum" else same.mean()
+
+
 class AgreementLoss(Measure):
     def __init__(self, override_hard=False):
         self.override_hard = override_hard
