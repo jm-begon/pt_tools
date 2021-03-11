@@ -453,20 +453,19 @@ class ImageNet(FullDataset):
             transform=self.ls_transform
         )
 
-        vs = torchvision.datasets.ImageNet(
+        ts = torchvision.datasets.ImageNet(
             root=self.folder,
             split="val",
-            transform=self.vs_transform
+            transform=self.ts_transform
         )
 
-        # vs, ts = self.vs_from_ls(vs, 0.5)
-        # ts.transform = self.ts_transform
+        ls, vs = self.vs_from_ls(ls, 0.9)
 
-        ts = torchvision.datasets.ImageFolder(
-            root=os.path.join(self.folder, "alltest"),
-            transform=self.ts_transform,
-            target_transform=lambda x:-1  # unknown
-        )
+        # ts = torchvision.datasets.ImageFolder(
+        #     root=os.path.join(self.folder, "alltest"),
+        #     transform=self.ts_transform,
+        #     target_transform=lambda x:-1  # unknown
+        # )
         return ls, vs, ts
 
 
